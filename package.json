@@ -10,7 +10,7 @@
     "environment.js"
   ],
   "scripts": {
-    "test:live": "cross-env DEBUG_MODE=1 jest",
+    "test:live": "cross-env DEBUG_MODE=1 JEST_ELECTRON_CONFIG_PATH='./jest-electron.json' jest",
     "test": "jest",
     "cp": "copyfiles -u 1 src/electron/**/*.{html,css} lib",
     "build": "rimraf lib && tsc && npm run cp",
@@ -27,6 +27,7 @@
     ]
   },
   "dependencies": {
+    "app-root-path": "^3.0.0",
     "jest-haste-map": "^24.9.0",
     "jest-message-util": "^24.9.0",
     "jest-mock": "^24.9.0",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@jest/types": "^27.4.2",
+    "@types/app-root-path": "^1.2.4",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^17.0.11",

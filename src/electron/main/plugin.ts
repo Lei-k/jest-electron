@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 
 import * as path from 'path';
+import { externalProjectRoot } from '../..';
 
 import { Config } from '../../utils/config';
 
@@ -17,12 +18,19 @@ interface Plugin {
     onAppReady?: (windows: BrowserWindow[]) => void
 }
 
+function resolvePath(file: string) {
+    return process.env.JEST_ELECTRON_CONFIG_PATH ? 
+        path.join(process.cwd(), process.env.JEST_ELECTRON_CONFIG_PATH, '../', file)
+        :
+        path.join(externalProjectRoot, file)
+}
+
 function resolvePlugins() {
     const pluginPaths = config.read().plugins;
 
     if(!pluginPaths) return [];
 
-    let plugins = pluginPaths.map(p => require(path.join(process.cwd(), p))) as Plugin[];
+    let plugins = pluginPaths.map(p => require(resolvePath(p))) as Plugin[];
 
     return plugins;
 }

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { externalProjectRoot } from '..';
 
 const CONFIG_FILE = 'jest-electron.json';
 
@@ -33,7 +34,8 @@ export class Config {
    * get the configure save file path
    */
   private getConfigPath(): string {
-    return path.resolve(process.cwd(), CONFIG_FILE);
+    return process.env.JEST_ELECTRON_CONFIG_PATH? 
+    path.join(process.cwd(), process.env.JEST_ELECTRON_CONFIG_PATH) : path.resolve(externalProjectRoot, CONFIG_FILE);
   }
 
   private readFromFile(): IConfig {
