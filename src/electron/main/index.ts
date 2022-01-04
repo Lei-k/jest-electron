@@ -16,15 +16,6 @@ app.whenReady().then(() => {
   // create a window pool instance
   const windowPool = new WindowPool(concurrency, debugMode);  
 
-  windowPool.init().then(() => {
-    // after init call plugin
-    plugins.forEach(plugin => {
-      if(plugin.onAppReady) {
-        plugin.onAppReady(windowPool.windows);
-      }
-    });
-  })
-
   // redirect the test cases data, and redirect test result after running in electron
   process.on(EventsEnum.ProcMessage, ({ test, id, type }) => {
     if (type === EventsEnum.ProcRunTest) {
@@ -40,6 +31,15 @@ app.whenReady().then(() => {
     }
   });
 
-  // electron proc ready
-  process.send({ type: EventsEnum.ProcReady });
+  windowPool.init().then(() => {
+    // after init call plugin
+    plugins.forEach(plugin => {
+      if(plugin.onAppReady) {
+        plugin.onAppReady(windowPool.windows);
+      }
+    });
+
+    // electron proc ready
+    process.send({ type: EventsEnum.ProcReady });
+  })
 });
