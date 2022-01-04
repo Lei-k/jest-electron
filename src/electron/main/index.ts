@@ -16,11 +16,16 @@ app.on('ready', () => {
   // create a window pool instance
   const windowPool = new WindowPool(concurrency, debugMode);
 
-  plugins.forEach(plugin => {
-    if(plugin.onAppReady) {
-      plugin.onAppReady(windowPool.windows);
-    }
-  });
+  windowPool.init().then(() => {
+    // after init call plugin
+    plugins.forEach(plugin => {
+      if(plugin.onAppReady) {
+        plugin.onAppReady(windowPool.windows);
+      }
+    });
+  })
+
+  
 
   // redirect the test cases data, and redirect test result after running in electron
   process.on(EventsEnum.ProcMessage, ({ test, id, type }) => {

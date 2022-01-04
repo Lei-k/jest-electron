@@ -9,6 +9,7 @@ export declare class WindowPool {
     private locked;
     constructor(maxSize?: number, debugMode?: boolean);
     get windows(): BrowserWindow[];
+    init(): Promise<void>;
     /**
      * get a window with thread lock
      */

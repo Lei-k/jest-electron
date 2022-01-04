@@ -43,8 +43,6 @@ export class WindowPool {
     this.maxSize = debugMode ? 1 : maxSize;
     this.debugMode = debugMode;
 
-    this.init();
-
     ipcMain.on(EventsEnum.WebContentsReady, () => {
       this.runAllTest();
     });
