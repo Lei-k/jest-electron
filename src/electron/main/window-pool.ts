@@ -108,6 +108,7 @@ export class WindowPool {
         webPreferences: {
           webSecurity: false,
           nodeIntegration: true,
+          contextIsolation: false
         },
       };
 
