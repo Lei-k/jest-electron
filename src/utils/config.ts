@@ -13,7 +13,8 @@ const DEFAULT_CONFIG = {
 type IConfig = {
   readonly width: number;
   readonly height: number;
-  readonly plugins?: string[]
+  readonly plugins?: string[],
+  readonly electron?: string
 }
 
 /**
@@ -63,9 +64,9 @@ export class Config {
    * @param flush
    */
   write(config: IConfig, flush: boolean = false) {
-    this.config = flush ? config : { ...this.read(), ...config };
-    try {
-      fs.writeFileSync(this.getConfigPath(), JSON.stringify(this.config));
-    } catch (e) {}
+    // this.config = flush ? config : { ...this.read(), ...config };
+    // try {
+    //   fs.writeFileSync(this.getConfigPath(), JSON.stringify(this.config));
+    // } catch (e) {}
   }
 }

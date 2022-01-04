@@ -2,6 +2,7 @@ declare type IConfig = {
     readonly width: number;
     readonly height: number;
     readonly plugins?: string[];
+    readonly electron?: string;
 };
 /**
  * configure saver class

@@ -5,6 +5,10 @@ import { EventsEnum } from '../../utils/constant';
 import { uuid } from '../../utils/uuid';
 import { delay } from '../../utils/delay';
 
+import { Config } from '../../utils/config';
+
+const config = new Config('');
+
 /**
  * electron proc
  */
@@ -66,7 +70,7 @@ export class Electron {
         args.splice(0, 0, ...process.env.JEST_ELECTRON_STARTUP_ARGS.split(/\s+/));
       };
       const proc = spawn(
-        electron as any,
+        config.read().electron || electron as any,
         args,
         {
           stdio: ['ipc'],
