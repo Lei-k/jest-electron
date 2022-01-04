@@ -48,6 +48,10 @@ export class WindowPool {
     });
   }
 
+  get windows() {
+    return this.pool.map(p => p.win);
+  }
+
   /**
    * get a window with thread lock
    */

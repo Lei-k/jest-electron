@@ -18,7 +18,7 @@ app.on('ready', () => {
 
   plugins.forEach(plugin => {
     if(plugin.onAppReady) {
-      plugin.onAppReady();
+      plugin.onAppReady(windowPool.windows);
     }
   });
 

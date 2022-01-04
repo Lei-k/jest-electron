@@ -14,7 +14,7 @@ export type CreateWindowFactory = (config: {
 
 interface Plugin {
     createWindow?: CreateWindowFactory,
-    onAppReady?: () => void
+    onAppReady?: (windows: BrowserWindow[]) => void
 }
 
 function resolvePlugins() {
