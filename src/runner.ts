@@ -1,6 +1,10 @@
 import throat from 'throat';
 import { electronProc } from './electron/proc';
 
+import { Config } from '@jest/types';
+
+import { Test, TestRunnerContext, OnTestFailure, OnTestStart, OnTestSuccess, TestWatcher } from 'jest-runner';
+
 const isDebugMode = (): boolean => {
   return process.env.DEBUG_MODE === '1';
 };
@@ -10,15 +14,16 @@ const isDebugMode = (): boolean => {
  * Runner class
  */
 export default class ElectronRunner {
-  private _globalConfig: any;
+  private _globalConfig: Config.GlobalConfig;
   private _debugMode: boolean;
 
-  constructor(globalConfig: any) {
+  constructor(globalConfig: Config.GlobalConfig, context?: TestRunnerContext) {
     this._globalConfig = globalConfig;
+
     this._debugMode = isDebugMode();
   }
 
-  private getConcurrency(testSize): number {
+  private getConcurrency(testSize: number): number {
     const { maxWorkers, watch, watchAll } = this._globalConfig;
     const isWatch = watch || watchAll;
 
@@ -28,11 +33,11 @@ export default class ElectronRunner {
   }
 
   async runTests(
-    tests: Array<any>,
-    watcher: any,
-    onStart: (Test) => void,
-    onResult: (Test, TestResult) => void,
-    onFailure: (Test, Error) => void,
+    tests: Test[],
+    watcher: TestWatcher,
+    onStart: OnTestStart,
+    onResult: OnTestSuccess,
+    onFailure: OnTestFailure,
   ) {
     const concurrency = this.getConcurrency(tests.length);
 
