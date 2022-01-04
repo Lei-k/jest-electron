@@ -4,3 +4,4 @@ node_modules
 jest-electron.json
 on-app-start.js
 test
+create-window.js

@@ -12,7 +12,7 @@ app.on('window-all-closed', () => {
   app.quit();
 });
 
-app.on('ready', () => {
+app.whenReady().then(() => {
   // create a window pool instance
   const windowPool = new WindowPool(concurrency, debugMode);
 
