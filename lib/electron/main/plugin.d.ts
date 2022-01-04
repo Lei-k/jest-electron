@@ -6,7 +6,7 @@ export declare type CreateWindowFactory = (config: {
 }) => BrowserWindow;
 interface Plugin {
     createWindow?: CreateWindowFactory;
-    onAppReady?: (windows: BrowserWindow[]) => void;
+    onAppReady?: (windows: BrowserWindow[]) => Promise<void> | void;
 }
 declare const plugins: Plugin[];
 export default plugins;

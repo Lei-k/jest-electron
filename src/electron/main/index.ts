@@ -32,14 +32,20 @@ app.whenReady().then(() => {
   });
 
   windowPool.init().then(() => {
+    let ps = [];
+
     // after init call plugin
     plugins.forEach(plugin => {
       if(plugin.onAppReady) {
-        plugin.onAppReady(windowPool.windows);
+        ps.push(plugin.onAppReady(windowPool.windows));
       }
     });
 
-    // electron proc ready
-    process.send({ type: EventsEnum.ProcReady });
+    Promise.all(ps).then(() => {
+        // electron proc ready
+        process.send({ type: EventsEnum.ProcReady });
+    })
+
+    
   })
 });

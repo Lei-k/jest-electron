@@ -15,7 +15,7 @@ export type CreateWindowFactory = (config: {
 
 interface Plugin {
     createWindow?: CreateWindowFactory,
-    onAppReady?: (windows: BrowserWindow[]) => void
+    onAppReady?: (windows: BrowserWindow[]) => Promise<void> | void
 }
 
 function resolvePath(file: string) {
