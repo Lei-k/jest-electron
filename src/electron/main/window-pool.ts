@@ -111,7 +111,8 @@ export class WindowPool {
         webPreferences: {
           webSecurity: false,
           nodeIntegration: true,
-          contextIsolation: false
+          contextIsolation: true,
+          preload: path.join(__dirname, '../renderer/index.js')
         },
       };
 
