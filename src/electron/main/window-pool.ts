@@ -7,6 +7,16 @@ import { delay } from '../../utils/delay';
 import { uuid } from '../../utils/uuid';
 import { Config } from '../../utils/config';
 
+import plugins, { CreateWindowFactory } from './plugin';
+
+let createWindow: CreateWindowFactory;
+
+plugins.forEach(p => {
+  if(p.createWindow) {
+    createWindow = p.createWindow;
+  }
+})
+
 type Info = {
   win: BrowserWindow;
   idle: boolean;
@@ -91,7 +101,8 @@ export class WindowPool {
     return new Promise((resolve, reject) => {
       const winOpts = {
         // read window size from configure file
-        ...config.read(),
+        width: config.read().width,
+        height: config.read().height,
         show: this.debugMode,
         focusable: this.debugMode,
         webPreferences: {
@@ -100,7 +111,17 @@ export class WindowPool {
         },
       };
 
-      let win = new BrowserWindow(winOpts);
+      let win: BrowserWindow;
+
+      if(createWindow) {
+        win = createWindow({
+          width: config.read().width,
+          height: config.read().height,
+          debug: this.debugMode
+        });
+      }else {
+        win = new BrowserWindow(winOpts);
+      }
 
       // when window close, save window size locally
       win.on('close', () => {

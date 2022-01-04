@@ -6,11 +6,13 @@ const CONFIG_FILE = 'jest-electron.json';
 const DEFAULT_CONFIG = {
   height: 800,
   width: 1024,
+  plugins: []
 };
 
 type IConfig = {
   readonly width: number;
   readonly height: number;
+  readonly plugins?: string[]
 }
 
 /**
@@ -31,7 +33,7 @@ export class Config {
    * get the configure save file path
    */
   private getConfigPath(): string {
-    return path.resolve(this.dir, CONFIG_FILE);
+    return path.resolve(process.cwd(), CONFIG_FILE);
   }
 
   private readFromFile(): IConfig {
