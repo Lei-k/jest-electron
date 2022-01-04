@@ -14,7 +14,7 @@ app.on('window-all-closed', () => {
 
 app.whenReady().then(() => {
   // create a window pool instance
-  const windowPool = new WindowPool(concurrency, debugMode);
+  const windowPool = new WindowPool(concurrency, debugMode);  
 
   windowPool.init().then(() => {
     // after init call plugin
@@ -24,8 +24,6 @@ app.whenReady().then(() => {
       }
     });
   })
-
-  
 
   // redirect the test cases data, and redirect test result after running in electron
   process.on(EventsEnum.ProcMessage, ({ test, id, type }) => {

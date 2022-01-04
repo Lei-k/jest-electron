@@ -82,6 +82,9 @@ export class Electron {
         }
       );
 
+      proc.stdout.pipe(process.stdout);
+      proc.stderr.pipe(process.stderr);
+
       const listener = (m) => {
         if (m.type === EventsEnum.ProcReady) {
           proc.removeListener(EventsEnum.ProcMessage, listener);
