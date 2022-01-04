@@ -43,6 +43,8 @@ export class WindowPool {
     this.maxSize = debugMode ? 1 : maxSize;
     this.debugMode = debugMode;
 
+    this.init();
+
     ipcMain.on(EventsEnum.WebContentsReady, () => {
       this.runAllTest();
     });
@@ -50,6 +52,16 @@ export class WindowPool {
 
   get windows() {
     return this.pool.map(p => p.win);
+  }
+
+  async init() {
+    for(let i = 0; i < this.maxSize; i++) {
+      // pool has space, then create a new window instance
+      const win = await this.create();
+
+      // put it into pool
+      this.pool.push({ win, idle: true, tests: [] });
+    }
   }
 
   /**
@@ -82,20 +94,9 @@ export class WindowPool {
     if (info) return info.win;
 
     // no idle window
-    // and the pool is full, delay some time
-    if (this.isFull()) {
-      await delay();
+    await delay();
 
-      return await this.getAsync();
-    }
-
-    // pool has space, then create a new window instance
-    const win = await this.create();
-
-    // put it into pool
-    this.pool.push({ win, idle: true, tests: [] });
-
-    return win;
+    return await this.getAsync();
   }
 
   /**
@@ -221,9 +222,11 @@ export class WindowPool {
    */
   public async runTest(id: string, test: any): Promise<any> {
     const win = await this.get();
+
     const result =  await this.run(win, id, test);
 
     this.appendTest(win, test);
+
     return result;
   }
 
