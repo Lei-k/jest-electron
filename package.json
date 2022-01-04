@@ -9,7 +9,7 @@
     "environment.js"
   ],
   "scripts": {
-    "test-live": "DEBUG_MODE=1 jest",
+    "test:live": "cross-env DEBUG_MODE=1 jest",
     "test": "jest",
     "cp": "copyfiles -u 1 src/electron/**/*.{html,css} lib",
     "build": "rimraf lib && tsc && npm run cp",
@@ -44,6 +44,7 @@
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.15",
     "copyfiles": "^2.1.1",
+    "cross-env": "^7.0.3",
     "jest": "^24.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
