@@ -76,7 +76,7 @@ export class Electron {
 
       const proc = spawn(
         process.env.JEST_ELECTRON_HEADLESS?
-        'xxvfb-run electron-mocha'
+        'xvfb-run electron-mocha'
         :
         config.read().electron || electron as any,
         args,
