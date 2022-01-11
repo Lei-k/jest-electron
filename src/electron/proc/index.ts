@@ -69,7 +69,15 @@ export class Electron {
       if (process.env.JEST_ELECTRON_STARTUP_ARGS){
         args.splice(0, 0, ...process.env.JEST_ELECTRON_STARTUP_ARGS.split(/\s+/));
       };
+
+      if(process.env.JEST_ELECTRON_HEADLESS) {
+        console.log('run in headless mode')
+      }
+      
       const proc = spawn(
+        process.env.JEST_ELECTRON_HEADLESS?
+        'xvfb-maybe electron-mocha'
+        :
         config.read().electron || electron as any,
         args,
         {

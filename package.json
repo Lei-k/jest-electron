@@ -12,6 +12,7 @@
   "scripts": {
     "test:live": "cross-env DEBUG_MODE=1 JEST_ELECTRON_CONFIG_PATH='./jest-electron.json' jest",
     "test": "jest",
+    "test:headless": "cross-env JEST_ELECTRON_HEADLESS=1 JEST_ELECTRON_CONFIG_PATH='./jest-electron.json' jest",
     "cp": "copyfiles -u 1 src/electron/**/*.{html,css} lib",
     "build": "rimraf lib && tsc && npm run cp",
     "prepublishOnly": "npm run build"
@@ -50,12 +51,14 @@
     "copyfiles": "^2.1.1",
     "cross-env": "^7.0.3",
     "electron": "^16.0.6",
+    "electron-mocha": "^11.0.2",
     "jest": "^24.9.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.6.2"
+    "typescript": "^3.6.2",
+    "xvfb-maybe": "^0.2.1"
   },
   "keywords": [
     "jest-electron",
